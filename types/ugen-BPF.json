@@ -1,0 +1,9 @@
+{
+    "type":"ugen",
+    "class":"BPF",
+    "parameters":[
+        {"type":"parameter", "name":"in",    "values":["ugen"]},
+        {"type":"parameter", "name":"center","values":["ugen","float","integer"]},
+        {"type":"parameter", "name":"q",     "values":["ugen","float","integer"]}
+    ]
+}

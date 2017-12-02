@@ -1,0 +1,9 @@
+{
+    "type":"ugen",
+    "class":"LPF",
+    "parameters":[
+        {"type":"parameter", "name":"in",           "values":["ugen"]},
+        {"type":"parameter", "name":"frequency",    "values":["ugen","float","integer"]},
+        {"type":"parameter", "name":"mul",          "values":["ugen","float","integer"]}
+    ]
+}

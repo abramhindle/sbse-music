@@ -1,0 +1,8 @@
+{
+    "type":"ugen",
+    "class":"add",
+    "parameters":[
+        {"type":"parameter", "name":"1",    "values":["ugen","float","integer"]},
+        {"type":"parameter", "name":"2",    "values":["ugen","float","integer"]}
+    ]
+}

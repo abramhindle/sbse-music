@@ -1,0 +1,5 @@
+// LPF in frequency mul
+LPF.ar(   in:( ${in} ), 
+        freq:( ${frequency} ),
+         mul:( ${mul} )
+)

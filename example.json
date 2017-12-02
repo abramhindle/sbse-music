@@ -1,0 +1,9 @@
+{
+    "type":"ugen",
+    "class":"BPF",
+    "parameters":[
+        {"type":"parameter", "name":"in","value":{"type":"ugen","class":"SinOsc","parameters":[{"type":"parameter","name":"frequency","value":{"type":"float","value":440}}]}},
+        {"type":"parameter", "name":"center","value":{"type":"integer","value":440}},
+        {"type":"parameter", "name":"q", "value":{"type":"float","value":0.75}},
+    ]
+}

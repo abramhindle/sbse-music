@@ -1,0 +1,1 @@
+SinOsc.ar( freq:( ${frequency} ))

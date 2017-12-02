@@ -1,0 +1,14 @@
+* SBSE-Music
+** Purpose
+
+Search based SE music. Generate music code.
+
+** Ideas
+
+Live Code mutation?
+
+This implies that we should focus on a live code environment?
+
+Like chuck? Or supercollider.
+
+We can start by mutating templates or mutating json
