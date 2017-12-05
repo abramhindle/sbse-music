@@ -29,6 +29,14 @@ def load_base():
 
 ugens = {name:load_type("ugen",name) for name in ugen_list}
 ugen_templates = {name:load_template("ugen",name) for name in ugen_list }
+ugen_templates["base"] = load_template("base","base")
+
+ugens["base"] = {"type":"base","class":"base",
+                 "parameters":[
+                     {"type":"parameter", "name":"1", "values":["ugen"]}
+                 ]
+}
+
 
 def templater(template,args):
     def replacer(matchobj):
@@ -77,6 +85,9 @@ def render_ugen(concrete):
     param_dict = gen_param_dict(parameters)
     return templater(template,param_dict)
 
+def render_base(concrete):
+    return render_ugen(concrete)
+
 def render(concrete):
     if concrete["type"] == "float":
         return str(concrete["value"])
@@ -86,6 +97,8 @@ def render(concrete):
         return render(concrete["value"])
     if concrete["type"] == "ugen":
         return render_ugen(concrete)
+    if concrete["type"] == "base":
+        return render_base(concrete)
     raise Exception("Can't render: %s" % str(concrete))
 
 def test_render():
@@ -124,13 +137,24 @@ def generate_integer(param=None):
         maxi = int(param.get("max",22000))
         return {"type":"integer","value":random.randint(mini,maxi)}
 
+ugen_depth = 0
 def generate_ugen(param=None):
+    global ugen_depth
+    ugen_depth += 1
     my_ugen_name = choose(ugen_list)
     my_ugen_def  = ugens[my_ugen_name]
     new_ugen = copy.deepcopy(my_ugen_def)
     params = [ fill_parameter(new_ugen,p["name"]) for p in new_ugen["parameters"] ]
     new_ugen["parameters"] = params
+    ugen_depth -= 1
     return new_ugen
+
+def generate_base(param=None):
+    new_ugen = copy.deepcopy(ugens["base"])
+    params = [ fill_parameter(new_ugen,p["name"]) for p in new_ugen["parameters"] ]
+    new_ugen["parameters"] = params
+    return new_ugen
+
 
 
 def generate_param(param_type,param=None):
@@ -150,15 +174,25 @@ def replace_parameter(ugen, param_name, new_param):
         if ugen["parameters"][i]["name"] == param_name:
             new_ugen["parameters"][i] = new_param
     return new_ugen
-    
+
+terminals = set(["float","integer","frequency"])
+def choose_terminal(values):
+    terms = terminals.intersection(values)
+    if len(terms) < 1:
+        return choose(values)
+    else:
+        return choose(list(terms))
+
 def fill_parameter(ugen,param_name,param_type=None):
-    assert ugen["type"] == "ugen"
-    new_ugen = copy.deepcopy(ugen)
+    assert ugen["type"] in ["ugen","base"]
     definition = ugens[ugen["class"]]
     param = [p for p in definition["parameters"] if p["name"] == param_name][0]
     new_param = copy.deepcopy(param)
     if param_type is None:
-        hole_type = choose(new_param["values"])
+        if ugen_depth > 20:
+            hole_type = choose_terminal(new_param["values"])            
+        else:
+            hole_type = choose(new_param["values"])
     else:
         hole_type = param_type
     del(new_param["values"])
@@ -189,4 +223,4 @@ if __name__ == "__main__":
     if args.test:
         tests()
     else:
-        print render(generate_ugen())
+        print render(generate_base())
