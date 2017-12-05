@@ -3,7 +3,7 @@
     "class":"BPF",
     "parameters":[
         {"type":"parameter", "name":"in",    "values":["ugen"]},
-        {"type":"parameter", "name":"center","values":["ugen","float","integer"]},
-        {"type":"parameter", "name":"q",     "values":["ugen","float","integer"]}
+        {"type":"parameter", "name":"frequency","values":["ugen","frequency"]},
+        {"type":"parameter", "name":"q",     "values":["ugen","float","integer"], "min":0.001, "max":1.0}
     ]
 }

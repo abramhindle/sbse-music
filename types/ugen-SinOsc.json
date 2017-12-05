@@ -2,6 +2,6 @@
     "type":"ugen",
     "class":"SinOsc",
     "parameters":[
-        {"type":"parameter", "name":"frequency", "values":["ugen","float","integer"]}
+        {"type":"parameter", "name":"frequency", "values":["ugen","frequency"]}
     ]
 }

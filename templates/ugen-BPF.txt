@@ -1,5 +1,5 @@
 // BPF in frequency q
 BPF.ar(   in:( ${in} ), 
         freq:( ${frequency} ),
-           q:( ${q} )
+          rq:( ${q} )
 )
